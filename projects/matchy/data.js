@@ -204,12 +204,12 @@ function getRandom(array) {
   //array[Math.floor <--to get interger(Math.random() * array.length <--- end point ///ask Taylor how to do inclusive in this example//assuming this has to do with why spec test fails every few cycles
   //wouldnt pass os test with array.length as max. looked at error and changed to 3 based on test expectations.
   //Ask why, not completely sure
-    return array[Math.floor(Math.random() * 3)];
+    return Math.floor(Math.random() * array.length);
 }
 //add random name to friends array using above function, passing in animals array and using dot notation to access name property. can also use brackey ["name"]
-friends.push(getRandom(animals).name);
+friends.push(animals[getRandom(animals)].name);
 //check friends array 
-console.log(friends)
+console.log(friends);
 //use bracket notation to add friends array to new friends property om any animal object. I choose index 2 
 animals[2]["friends"] = friends;
 //check animals array with all new objects and one with friends 

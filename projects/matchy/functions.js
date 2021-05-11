@@ -62,8 +62,8 @@ var remove = (array,name) => {
     for (let i = 0; i < array.length; i++) {
         //condtional comparing name to name property of object in array, accessed via brakcet and dot notation. bracket for indivdual values (our object) in array and dot to acesss name property on object. 
         if (name === array[i].name) {
-            //code block to remove object using .splice 
-            array.splice(array[i], 1);
+            //code block to remove object using .splice , dont need array[i] in splice, just i for index
+            array.splice(i, 1);
         }
     }
 }

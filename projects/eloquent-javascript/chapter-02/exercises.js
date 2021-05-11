@@ -2,16 +2,43 @@
 ////////////////////////////////////////////////////////////////////////////////
 // triangles ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//add paramter to function for number argument to be passed 
+function triangles(number) {
+//create string literal for hashes 
+let hash = "";
+//for loop to start at 0 and end less than input number
+for (let i = 0; i < number; i++) {
+//print hash plus 1 more hash on each loop 
+  console.log(hash += "#")
+}
 
-function triangles() {
 
 }
 ////////////////////////////////////////////////////////////////////////////////
 // fizzBuzz ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-function fizzBuzz() {
-  
+//add starting and ending number params to function 
+function fizzBuzz(num1, num2) {
+  //for loop to start and first number and end (include) at second 
+  for (let i = num1; i <= num2; i++) {
+    //conditional if number (i) is divisible by 3 and 5 using remiander and logical operator
+    if (i % 3 === 0 && i % 5 === 0) {
+      //print fizzbuzz
+      console.log ("fizzbuzz"); 
+       // if divisible by 3
+        } else if (i % 3 === 0) {
+       //print fizz
+          console.log("fizz");
+       //if divisible by 5
+        } else if (i % 5 === 0)  {
+        //print buzz  
+          console.log("buzz");
+        //if anything else 
+        } else {
+         //print remaining numbers in range 
+          console.log(i);
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

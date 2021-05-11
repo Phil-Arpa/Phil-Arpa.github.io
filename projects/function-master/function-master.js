@@ -182,21 +182,24 @@ function addFriend (name, object) {
 //////////////////////////////////////////////////////////////////////
 
 function isFriend(name, object) {
-    //conditional statemnt to check if the object keys have a length using Object.keys.length chain
-    if ( Object.keys(object).length) {
-       //for loop to access friends array  
-        for(var i = 0;i < object.friends.length;i++) {
-            //if freinds array elements (friends[i] is strictly equal to name arg return true (name found in array))
-            if(object.friends[i] === name) {
-                return true;
-            }
-        }
-        //return false if not within loop 
-        return false;
-    }
-    //return false again to meet any other false conditions 
-        return false;
-}
+   //if statment using has own prop method to check first if object contains friends array, most important. no further if not
+   if (object.hasOwnProperty("friends")) {
+       //for loop to cycle through friends array using dot notation to access array within object
+       for (let i = 0; i < object.friends.length; i++) {
+           //condtional if names in friends array (friends[i]) mathces name arg
+           if (object.friends[i] === name) {
+               //if so return true
+               return true; 
+           }
+       }
+   }
+    //if not return false OUTSIDE OF LOOP 
+    return false
+    
+}   
+
+    
+
   
         
     
@@ -212,27 +215,47 @@ function isFriend(name, object) {
 //////////////////////////////////////////////////////////////////////
 // Function 13 - Non-Friends /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-//***********NEED TO ASK TAYLOR ABOUT THIS ON FRIDAY*************** not grasping, partner and I used internet solution
-function nonFriends(name, array) {    
-    var nameList = [];
-    var result = [];
-    var current = null;
-    for(var i=0; i<array.length; i++){
-        if(name === array[i].name){
-            current = array[i];
-        }else{
-            nameList.push(array[i].name);
-        }
-    }
-    if(current === null){
-        return nameList;
-    }
-    for(var i=0; i<nameList.length; i++){
-        if(current.friends.indexOf(nameList[i]) == -1){
-            result.push(nameList[i]);
-        }
-    }
-    return result;}
+
+function nonFriends(name, array) {   
+ 
+ //METHOD 1 with logical operators, my preferences, less lines of codes 
+  //declare array literal for non friends 
+  var nonFriends = [];
+  //for loop to circle through array to access all values 
+  for (let i = 0; i < array.length; i ++) {
+      //conditional with && operators to check if name is not the objects name and name is not included in objects friend array using .includes 
+            if (array[i].name !== name && array[i].friends.includes(name) === false) {
+                nonFriends.push(array[i].name);
+            }
+      
+  }
+    // return nonFriends array with Friends that didnt met those conditions, (not friends)
+    return nonFriends;
+}
+  
+  
+  
+  //METHOD 2 with if inside of if
+  //create array literal for collection list 
+//  var nonFriends = []
+  
+//   //for loop to circle through array
+//   for (var i = 0; i < array.length; i++) {
+//     //check if name is not the name object we're checking    
+//       if (array[i].name !== name) {
+//  // if the name is in the object friends array (.includes checks boolean if array includes a value, very cool method)
+ 
+//       if (array[i].friends.includes(name) === false) {
+         
+      
+//           nonFriends.push(array[i].name);
+//         }
+     
+          
+//       }
+//   } 
+  
+//   return nonFriends;
 
 
 //////////////////////////////////////////////////////////////////////
