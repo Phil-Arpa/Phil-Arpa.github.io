@@ -162,15 +162,8 @@ _.indexOf = function (array, value) {
 *   _.contains([1,"two", 3.14], "two") -> true
 */
 
-_.contains = function (array, value) {
-    //for loop to access array 
-    for (let i = 0; i < array.length; i++) {
-        //condtional checking if value is in array
-        if (array[i] === value) {
-            return true
-        }
-    }
-    return false 
+_.contains = function(array, value) {
+    return array.includes(value) ? true : false;
 }
 
 
@@ -190,6 +183,21 @@ _.contains = function (array, value) {
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
+//essential same as a for loop
+_.each = function(collection, func) {
+    //condition to check if array
+    if (Array.isArray(collection)) {
+        //for loop to iterate through array
+        for (var i = 0; i < collection.length; i++) {
+            //passing in callbckFN with normal call back params
+            func(collection[i], i, collection);
+        }
+    } else {
+        for (var key in collection) {
+            func(collection[key], key, collection);
+        }
+    }
+}
 
 
 /** _.unique
@@ -202,6 +210,20 @@ _.contains = function (array, value) {
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+_.unique = function(array) {
+//create array literal   
+   const newArray = [];
+//create for loop to itereate through array   
+   for (let i = 0; i < array.length; i++) {
+//use ._indexOf in conditional to see if newArray does not include values from array[i]
+    if (_.indexOf(newArray, array[i]) === -1) {
+//if does not contain it push value to newArray         
+        newArray.push(array[i])
+    }
+   }
+   //return newArray, which will only have one of each value from array (duplicates removed)
+    return newArray
+}
 
 /** _.filter
 * Arguments:
@@ -218,6 +240,19 @@ _.contains = function (array, value) {
 * Extra Credit:
 *   use _.each in your implementation
 */
+//take an array and a function
+_.filter = function(array, func) {
+    const newArray = []
+//create for loop to call function for each element in array   
+    for (let i = 0; i < array.length; i++) {
+//code block anyomous function passing in element, index and array
+    if (func(array[i], i, array)) {
+        newArray.push(array[i]);
+        }  
+    }
+    return newArray;
+}
+
 
 
 /** _.reject
@@ -232,6 +267,18 @@ _.contains = function (array, value) {
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+_.reject = function(array, func) {
+    const newArray = []
+//create for loop to call function for each element in array   
+    for (let i = 0; i < array.length; i++) {
+//code block anyomous function passing in element, index and array
+    if (!func(array[i], i, array)) {
+        newArray.push(array[i]);
+        }  
+    }
+    return newArray;
+}
 
 
 /** _.partition
@@ -269,6 +316,38 @@ _.contains = function (array, value) {
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+
+////USING WITH FOR LOOP/////
+// _.map = function(collection, func) {
+//     const newArray = []
+//     if (Array.isArray(collection)) {
+//         for (let i = 0; i < collection.length; i++) {
+//             newArray.push(func(collection[i], i, collection))
+//         }
+//     } else {
+//         for (let key in collection) {
+//             newArray.push(func(collection[key], key, collection))
+//         }
+//     }
+
+//     return newArray
+// }
+
+///USING WITH EACH FUNCTION///TAKES PLACE OF LOOP
+_.map = function(collection, func) {
+    const newArray = []
+    if (Array.isArray(collection)) {
+        _.each(collection, function(e, i) {
+            newArray.push(func(collection[i], i, collection))
+        })
+    } else {
+        for (let key in collection) {
+            newArray.push(func(collection[key], key, collection))
+        }
+    }
+
+    return newArray
+}
 
 
 /** _.pluck

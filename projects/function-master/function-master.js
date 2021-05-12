@@ -224,7 +224,7 @@ function nonFriends(name, array) {
   //for loop to circle through array to access all values 
   for (let i = 0; i < array.length; i ++) {
       //conditional with && operators to check if name is not the objects name and name is not included in objects friend array using .includes 
-            if (array[i].name !== name && array[i].friends.includes(name) === false) {
+            if (array[i].name !== name && !array[i].friends.includes(name)) {
                 nonFriends.push(array[i].name);
             }
       
