@@ -91,7 +91,7 @@ main {
 
 .line:nth-child(even) {
     background: black;
-    color:rgb(172, 156, 44);
+    color:rgb(153,153,153);
 }
 
 .line-number {
