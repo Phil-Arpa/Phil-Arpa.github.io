@@ -300,6 +300,23 @@ _.reject = function(array, func) {
 }
 */
 
+_.partition = function(array, func) {
+   var trueArray = [];
+    var falseArray = [];
+    for (let i = 0; i < array.length; i++) {
+        if (func(array[i], i, array)) {
+            trueArray.push(array[i]);
+        } else {
+            falseArray.push(array[i])
+        }
+    }
+    
+    trueArray.push(falseArray);
+    return trueArray;
+    
+}
+
+
 
 /** _.map
 * Arguments:
