@@ -45,9 +45,27 @@ function fizzBuzz(num1, num2) {
 // drawChessboard //////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function drawChessboard() {
-
-}
+function drawChessboard(num) {
+  let board = "";
+    //for loop to iterate through array vertically 
+    for (let i = 0; i < num; i++) {
+          //nested loop to interate through array lines 
+          for (let j = 0; j < num; j++) {
+              //conditional to put space or # on every other index
+              if ((j+i) % 2 === 0) {
+                    //space for even indexes 
+                    board += " "
+                    // # for odd indexes 
+                    } else {
+                        board += "#"
+                    }
+                }
+                //new line at the end of outside loop (vertical)
+                board += "\n"
+            }
+            //print the board
+            console.log(board)
+        }
 
 ////////////////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE //////////////////////////////////////////////////////

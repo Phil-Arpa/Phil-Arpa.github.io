@@ -2,32 +2,59 @@
 // flatten /////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function flatten() {
-
+function flatten(array) {
+//use reduce and concat chained
+return array.reduce(function(acc, curr) {
+  return acc.concat(curr)
+} , [])
 }
 
 // /////////////////////////////////////////////////////////////////////////////
 // loop ////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
-
-function loop() {
-
+ 
+function loop(start, test, update, body) {
+  for (let value = start; test(value); value = update(value)) {
+    body(value);
+  }
 }
 
 // /////////////////////////////////////////////////////////////////////////////
 // every ///////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function every() {
-
+function every(collection, func) {
+ for (let i = 0; i < collection.length; i++) {
+            //if no colleciton is given, func is undef
+            if (func === undefined) {
+                //if element is false, return false  
+                if (!collection[i]) {
+                    //return false 
+                    return false 
+                }
+                //condtional to see if function call paramaters return false 
+            } else if (!func(collection[i], i, collection)) {
+                    // if so, return false 
+                    return false
+                }
+        }
+           //return true if all pass turthy, OUTSIDE OF LOOP
+            return true; 
 }
 
 // /////////////////////////////////////////////////////////////////////////////
 // dominantDirection ///////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function dominantDirection() {
+function dominantDirection(text) {
+  let counted = countBy(text, char => {
+    let script = characterScript(char.codePointAt(0));
+    return script ? script.direction : "none";
+  }).filter(({name}) => name != "none");
 
+  if (counted.length == 0) return "ltr";
+
+  return counted.reduce((a, b) => a.count > b.count ? a : b).name;
 }
 
 // /////////////////////////////////////////////////////////////////////////////

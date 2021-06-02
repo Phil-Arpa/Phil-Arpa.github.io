@@ -5,7 +5,23 @@ assign data, re-assign data, compare data, perform arthimitic and
 logical expressions on data. They are everywhere and its important to know 
 the types*/
 
-//Assignment operators
+//Assignment operators - assign values to variables.
+
+//=, +=, -=, *=, 
+
+//code examples//
+
+var x = 10; //assignment, assigns the value of 10 to var x
+x += 5; //addition assigment - adds value of right operand and assigns to var
+x -= 5; // subtract assignment - subtracts value of right operand and assigns to var 
+x *= 5; //you guessed it! multiplys right operand and assigns to var 
+/*Notice the theme here, whatever arithmetic operator is used, it is always 
+followed by "=". The assignment. This is important to know because we are performing an action specific 
+to whatver operator is used and then using it in conjuction with = to assign that value to the var. 
+More examples*/
+var y;
+x %= y; //remainder assignment - ie, x = (x % y)
+x /= y; // division assignment - ie, x = (x / y);
 
 
 //Arithmetic operators -used in mathematical expressions (+ operator also used on strings)

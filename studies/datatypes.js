@@ -175,4 +175,33 @@ function addParams(param1, param2) {
 
 console.log(addParams(1,2)) //will print 3
 
-//
+/*Before we finish with the data types section it is important to review two major points. How their values are stored and why.
+We refer to this as COPY BY VALUE or COPY BY REFERENCE. The reason for this difference is becasue of the alloted memory the computer 
+allows us for the information inside a given variable. 8 bits. Thats all we have to work with. Therefore, primitive or SIMPLE
+data types such as bools, numbers, strings (all the examples we covered above) can fit into that alloted space, those 8 bits.
+However, Complex Data Types (arrays, objs, our fun fun functions) values are not stored within that bits. Their size is 
+INDEFINITE! Thats what makes the so useful and the bread and butter of our programming. Therefore their values are COPIED 
+BY REFERENCE. Lets look at a couple quick bullet points below to further distinguish. 
+
+SIMPLE/PRIMITITIVE DATA TYPES --> COPY BY VALUE
+ -Can fit into the 8 bits of memory directly as the value 
+ - Atomic - only one single value 
+ - When assigning, copied from one var to the next
+ - Operations on primitives return NEW PRIMITIVES 
+ -Fun Fact** the largest primiitive data type is a number, taking up the full 8 bits of memory while our super 
+ useful friends Booleans, only take up 1 bit. 
+ 
+ 
+ COMPLEX DATA TYPES --> COPY BY REFERENCE 
+  -Indefinite in size, they can be as large or small as we want and ever changing, therefore their values are
+  COPIED BY REFERENCE 
+  -Typically the this reference refers to an address in the memory, not the actual data itself 
+  EX:*/
+ //complex data type - object 
+  var myObj = {name: "phil", town: "nola"}
+  //copying data by reference into another var 
+  var newRef = myObj;
+  newRef.town = "Bmore";
+  console.log(myObj.town) // prints Bmore because the VALUE is REFERENCED to the SAME OBJECT
+  
+  

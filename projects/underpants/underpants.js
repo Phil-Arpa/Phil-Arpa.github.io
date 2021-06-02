@@ -21,7 +21,7 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
-_.identity = function (value) {
+_.identity = function(value) {
     //simply returning the value 
     return value;
 }
@@ -46,11 +46,14 @@ _.identity = function (value) {
 * _.typeOf([1,2,3]) -> "array"
 */
 
-_.typeOf = function (value) {
+_.typeOf = function(value) {
+    //check for array with Array.isArray
     if (Array.isArray(value)) {
         return "array";
+    //check for null with value === null
     } else if (value === null) {
         return "null";
+    //lastly, return typeof value 
     }  else {
         return typeof value;
     }
@@ -73,15 +76,21 @@ _.typeOf = function (value) {
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 _.first = function(array,num) { 
+   //if array is not an array return array literal
     if (!Array.isArray(array)) {
         return [];
+    //if number isnt given or not a number return first element (index 0)
     } else if (typeof num !== "number") {
         return array[0]
+    //if number is negative, less than 0, return array literal
     }   else if (num < 0) {
         return []
+    //if number is greater than arrays length, return entire array
     }   else if (num > array.length) {
         return array;
+    //if array and number is given thats not neg or greater than array, return first number of elements
     }   else {
+    //use .slice. (start: index 0, end: num)    
         return array.slice(0, num)
     }
 }
@@ -105,14 +114,21 @@ _.first = function(array,num) {
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 _.last = function (array, num) {
+    //if array is not array, return array literal 
     if (!Array.isArray(array)) {
         return [];
+    //if num is not a number or not given 
     } else if (typeof num !== "number") {
+       //return last element 
         return array[array.length-1]
+   //if num is negative return array literal 
     }   else if (num < 0) {
         return []
+    // if num is greater than length of array, return array
     }   else if (num > array.length) {
         return array;
+    
+     //if array is array and number isnt greater than length or negative, return last number of elements   
     }   else {
         //use .slice method with array.length - num (number arg), to access the last indexes and slice off any index before 
         return array.slice(array.length - num)
@@ -163,6 +179,7 @@ _.indexOf = function (array, value) {
 */
 
 _.contains = function(array, value) {
+    //use .includes and ternary operator. does array include value ? return true or false.
     return array.includes(value) ? true : false;
 }
 
@@ -193,7 +210,9 @@ _.each = function(collection, func) {
             func(collection[i], i, collection);
         }
     } else {
+       //if collection is object
         for (var key in collection) {
+            //pass in callbackFN with call back params 
             func(collection[key], key, collection);
         }
     }
@@ -241,19 +260,35 @@ _.unique = function(array) {
 *   use _.each in your implementation
 */
 //take an array and a function
+// _.filter = function(array, func) {
+//     //create empty array to collect data 
+//     const newArray = []
+// //create for loop to call function for each element in array   
+//     for (let i = 0; i < array.length; i++) {
+// //if function params are true 
+//     if (func(array[i], i, array)) {
+//       //push truthy elements into newArray
+//         newArray.push(array[i]);
+//         }  
+//     }
+//     //return newArray 
+//     return newArray;
+// }
+
 _.filter = function(array, func) {
+    //create empty array to collect data 
     const newArray = []
-//create for loop to call function for each element in array   
-    for (let i = 0; i < array.length; i++) {
-//code block anyomous function passing in element, index and array
-    if (func(array[i], i, array)) {
+//use .each to call function for each element in array . loop through array.  
+    _.each(array, function(e, i, c) {
+        //check if elements are truthy
+        if (func(array[i], i, array)) {
+      //push truthy elements into newArray
         newArray.push(array[i]);
         }  
-    }
+     })
+    //return newArray 
     return newArray;
 }
-
-
 
 /** _.reject
 * Arguments:
@@ -269,14 +304,17 @@ _.filter = function(array, func) {
 */
 
 _.reject = function(array, func) {
+ //create array literal to collect data    
     const newArray = []
 //create for loop to call function for each element in array   
     for (let i = 0; i < array.length; i++) {
-//code block anyomous function passing in element, index and array
+//if calling func params are false 
     if (!func(array[i], i, array)) {
+        //push false elements into new array
         newArray.push(array[i]);
         }  
     }
+    //return newArray
     return newArray;
 }
 
@@ -301,18 +339,26 @@ _.reject = function(array, func) {
 */
 
 _.partition = function(array, func) {
+  //create empty array to collect all data
+   var newArray = []
+   //create empty array for truthy data 
    var trueArray = [];
+    //create false array for falsy data 
     var falseArray = [];
+   //for loop to iterate through array 
     for (let i = 0; i < array.length; i++) {
+      //if call back function parameters are true, push to true array  
         if (func(array[i], i, array)) {
             trueArray.push(array[i]);
+        //if false, push to false array 
         } else {
             falseArray.push(array[i])
         }
     }
-    
-    trueArray.push(falseArray);
-    return trueArray;
+    //push in trueArray and falseArray into newArray
+    newArray.push(trueArray, falseArray);
+    //return newArray 
+    return newArray;
     
 }
 
@@ -352,17 +398,23 @@ _.partition = function(array, func) {
 
 ///USING WITH EACH FUNCTION///TAKES PLACE OF LOOP
 _.map = function(collection, func) {
+    //create array literal to collect data 
     const newArray = []
+    //check for array 
     if (Array.isArray(collection)) {
-        _.each(collection, function(e, i) {
-            newArray.push(func(collection[i], i, collection))
+        //use .each to iterate through array with element, index and collection as params
+        _.each(collection, function(e, i, c) {
+            //push in entire functioncall with element, index and collection 
+            newArray.push(func(collection[i], i, c))
         })
     } else {
+        //check for object and key in loop to iterate through 
         for (let key in collection) {
+          //push entire callback function with element, key and collection into newArray 
             newArray.push(func(collection[key], key, collection))
         }
     }
-
+    //return newArray 
     return newArray
 }
 
@@ -378,6 +430,13 @@ _.map = function(collection, func) {
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
+_.pluck = function(array, prop) {
+    //use  and return .map to iterate through array passing in element, index and collection
+    return _.map(array, function(element, i, c) {
+     // .map creates a new array, so we just need to now return what we want, element[property] (value)   
+        return element[prop]
+    })
+}; 
 
 /** _.every
 * Arguments:
@@ -401,6 +460,69 @@ _.map = function(collection, func) {
 */
 
 
+
+//first attempt with .each, didnt work 
+// _.every = function(collection, func) {
+//     _.each(collection, function(e, i, c) {
+//         if (typeof func === 'undefined') {
+//                 if (collection[i] !== true) {
+//                     return false;
+//                 }
+//         }
+            
+//         else if (!func(collection[i], i, collection)) {
+//                 return false; 
+//             }
+//         })
+
+//     return true;
+        
+// }
+
+
+//second attempt worked with for loops. 
+//Return false first bc we want every element to pass. 
+_.every = function(collection, func) {
+    //check to see if array
+    if (Array.isArray(collection)) {
+        //for loop to iterate through array 
+        for (let i = 0; i < collection.length; i++) {
+            //if no colleciton is given, func is undef
+            if (func === undefined) {
+                //if element is false, return false  
+                if (!collection[i]) {
+                    //return false 
+                    return false 
+                }
+                //condtional to see if function call paramaters return false 
+            } else if (!func(collection[i], i, collection)) {
+                    // if so, return false 
+                    return false
+                }
+        }
+           //return true if all pass turthy, OUTSIDE OF LOOP
+            return true; 
+    }
+
+        //check if object
+        else if (typeof(collection) === "object") {
+            //iterate through obj
+            for (let key in collection) {
+                //if any parameters if the call back func are false, return false
+                if (!func(collection[key], key, collection)) {
+                    //return false 
+                    return false;
+                }
+            
+                
+            }
+        //if all pass truthy, return true outside of loop 
+            return true; 
+        }
+
+    
+};
+
 /** _.some
 * Arguments:
 *   1) A collection
@@ -421,6 +543,96 @@ _.map = function(collection, func) {
 *   _.some([1,3,5], function(e){return e % 2 === 0}) -> false
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
+//Needed to do undefined on own loop for this to pass.
+_.some =  function(collection, func) {
+    //conditional if func is not given 
+    if (func === undefined){
+        //for loop to itierate through array
+        for(var i = 0; i < collection.length; i++) {
+            //if even one element is true, return true
+            if (collection[i]) {
+                //return true. 
+                return true;
+            }
+        }
+        //if all are false, return false OUTSIDE OF LOOP
+        return false;
+    }
+    //check if Array
+    if (Array.isArray(collection)){
+        //for loop to iterate
+        for(var i = 0; i < collection.length; i++) {
+            //conditional to see if params of call func are true 
+            if(func(collection[i], i, collection)){
+                //return true 
+                return true;
+            }
+        }    
+        //return false if not, OUTSIDE OF LOOP
+        return false;
+    
+        //check if obj
+    } else if (typeof collection === 'object') {
+        //for loop to iterate through array 
+        for (var key in collection) {
+            //conditional if params of func call are true, just one needed 
+            if(func(collection[key], key, collection)){
+                //return true 
+                return true;
+            }
+        }
+        //if not, return false. OUTSIDE OF LOOP 
+        return false;
+    }
+};    
+
+
+// _.some = function(collection, func) {
+//     //check for Array
+//     if (Array.isArray(collection)) {
+//         //iterate through array
+//         for (let i = 0; i++; i < collection.length) {
+//             //conditional if func is undefined 
+//             if (func === undefined) {
+//                 //conditional if one element is truthy 
+//                 if (collection[i]) {
+//                     //return true  
+//                     return true;
+//                 }
+//                  
+//                 //if there is a function check if one element is true 
+//             } else if (func(collection[i], i, collection)) {
+//                 //return true 
+//                 return true; 
+//             }
+//         
+//         }
+//     //if not return false  
+//       return false;   
+//     }
+//     //check for object
+//     else if (typeof collection === "object") {
+//         //key in loop to itereate object
+//         for (let key in collection) {
+//             if (func === undefined) {
+//                 if (collection[key]) {
+//                     return true; 
+//                 }
+//             
+                
+//             }
+//             //if calling function is true for at least one element
+//              else if (func(collection[key], key, collection)) {
+//                 //return true
+//                 return true;
+//             }
+          
+//         }
+//         // if not return false OUTSIDE OF LOOP 
+//       return false;  
+//     }
+// }
+
 
 
 /** _.reduce
@@ -442,6 +654,29 @@ _.map = function(collection, func) {
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function(array, func, seed) {
+ //conditional to see if seed exists
+    if(seed !== undefined) {
+       //for loop to iterate through array
+       for(var i = 0; i < array.length; i++) {
+           //for the first iteration, set seed to previous result, use the return value of function as the previous result for the next iteration
+          seed = func(seed, array[i], i)
+       }
+       //return value of final function call (assigned to seed) ie return seed 
+       return seed;
+    } else {
+        //else if no seed was given assign seed to first value in array (index zero) 
+       seed = array[0];
+        //use for loop to iterate through array 
+        for (var i = 1; i < array.length; i++) {
+          //reassign seed to be value of function call 
+          
+          seed = func(seed, array[i], i);
+        }
+       //return value of final function call, ie seed. 
+        return seed;
+    }
+};
 
 /** _.extend
 * Arguments:
@@ -457,6 +692,14 @@ _.map = function(collection, func) {
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(obj1, ...obj2) {
+  //set new obj to any argument params using Obj.assign and ... syntax
+   var newObj = Object.assign(obj1, ...obj2)
+    //return new obj with obj arguments merged 
+    return newObj;
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
