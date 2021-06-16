@@ -491,7 +491,7 @@ _.every = function(collection, func) {
             if (func === undefined) {
                 //if element is false, return false  
                 if (!collection[i]) {
-                    //return false 
+                    //return false     
                     return false 
                 }
                 //condtional to see if function call paramaters return false 
